@@ -1,0 +1,30 @@
+{
+    "name": "@bartbutenaers/node-red-autolayout-sidebar",
+    "version": "1.0.0",
+    "description": "A sidebar plugin for Node-RED to offer auto-layouting",
+    "dependencies": {
+        "elkjs": "^0.8.2",
+        "@dagrejs/dagre": "^1.0.4"
+    },
+    "author": {
+        "name": "Bart Butenaers"
+    },
+    "license": "Apache-2.0",
+    "keywords": ["node-red", "auto", "layout", "graph", "sidebar"],
+    "bugs": {
+        "url": "https://github.com/bartbutenaers/node-red-autolayout-sidebar/issues"
+    },
+    "homepage": "https://github.com/bartbutenaers/node-red-autolayout-sidebar",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bartbutenaers/node-red-autolayout-sidebar.git"
+    },
+    "node-red": {
+        "nodes": {
+            "math": "auto_layout_config.js"
+        },
+        "plugins": {
+          "sidebar-plugin": "auto_layout_plugin.html"
+        }
+    }
+}
