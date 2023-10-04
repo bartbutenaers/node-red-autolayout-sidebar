@@ -1,0 +1,151 @@
+<!--
+  Copyright 2023, Bart Butenaers
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<script type="text/javascript">
+(function() {
+    var globalAutoLayoutConfigNode = null;
+    
+    // Ensure that the globalAutoLayoutConfigNode (still) exists, because the user might have deleted it meanwhile...
+    // !!!!!!!!!!!!!!! CALL THIS FUNCTION EVERYWHERE THE globalAutoLayoutConfigNode IS BEING USED !!!!!!!!!!!!!!!
+    function ensureAutoLayoutConfigNode() {
+        // If we had found it previously, check if it has been deleted by the user behind our back
+        if (globalAutoLayoutConfigNode !== null) {
+            var configNode = RED.nodes.node(globalAutoLayoutConfigNode.id);
+            if (configNode === null) { globalAutoLayoutConfigNode = null; }
+        }
+
+        // If not found previously, let's go find it
+        if (globalAutoLayoutConfigNode === null) {
+            var configNodes = [];
+            RED.nodes.eachConfig(function(configNode) {
+                if (configNode.type === 'auto_layout_config') { 
+                    configNodes.push(configNode); 
+                }
+            });
+
+            // Make sure we only have 1 config node
+            while (configNodes.length > 1) {
+                var configNode = configNodes.pop();
+                RED.nodes.remove(configNode.id);
+                RED.nodes.dirty(true);
+            }
+
+            // When we found a config node, let's use that one
+            if (configNodes.length === 1) { globalAutoLayoutConfigNode = configNodes[0]; }
+        }
+
+        // When it doesn't exist yet, create it if required
+        if (globalAutoLayoutConfigNode === null) {
+            // TODO controleren of de defaults door de config node code zelf toegepast worden????
+
+            // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
+            // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
+            // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
+            // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
+            globalAutoLayoutConfigNode = {
+                id: RED.nodes.id(),
+                _def: RED.nodes.getType("auto_layout_config"),
+                type: "auto_layout_config",
+                hasUsers: false, 
+                users: [],
+                // TODO default values for all properties
+                name: "AutoLayout",
+                label: function() { return this.name || "AutoLayout"}
+            }
+
+            // Add the new config node to the collection of Node-RED nodes
+            RED.nodes.add(globalAutoLayoutConfigNode);
+
+            // Make sure the "Deploy" button becomes active
+            RED.nodes.dirty(true);
+        }
+    }
+
+    RED.plugins.registerPlugin("autolayout-sidebar-plugin", {
+        onadd: function() {
+            // Register an action so the user could bind a keyboard shortcut to show the auto-layout sidebar
+            RED.actions.add("core:show-example-sidebar-tab",function() {
+                RED.sidebar.show("sidebar-auto-layout")
+            });
+
+            // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+            var content = $($('script[type="text/x-red"][data-template-name="auto_layout_sidebar"]').i18n().html());
+            
+            // Add a "Auto Layout" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+            RED.sidebar.addTab({
+                id: "sidebar-auto-layout",
+                label: "auto_layout", // short name for the tab
+                name: "Auto Layout", // long name for the menu
+                content: content,
+                closeable: true,
+                disableOnEdit: true,
+                iconClass: "fa fa-outdent",
+                action: "core:show-example-sidebar-tab"
+            });
+
+            // Show the algorithm settings as json in a typedinput element (in the sidebar)
+            $("#node-config-input-algorithm-settings").typedInput({
+                default: 'json',
+                types:['json']
+            });
+
+            // When the algorithm is changed in the sidebar, then store it into the config node
+            $("#node-config-input-algorithm").on("change", function() {
+                ensureAutoLayoutConfigNode();
+
+                let currentAlgorithm = $(this).val();
+
+                // When the property value has changed, save it in the config node and activate the 'deploy' button.
+                // Remark: don't check the input type (i.e. use != instead of  !==) because we will get the number values as strings...
+                if (globalAutoLayoutConfigNode.algorithm != currentAlgorithm) {
+                    globalAutoLayoutConfigNode.algorithm = currentAlgorithm;
+                    RED.nodes.dirty(true);
+                }
+            })
+
+            // When the algorithm properties are changed in the sidebar, then store them into the config node
+            $("#node-config-input-settings").on("change", function() {
+                ensureAutoLayoutConfigNode();
+
+                let currentAlgorithmSettings = $(this).val();
+
+                // When the property value has changed, save it in the config node and activate the 'deploy' button.
+                // Remark: don't check the input type (i.e. use != instead of  !==) because we will get the number values as strings...
+                if (globalAutoLayoutConfigNode.settings != currentAlgorithmSettings) {
+                    globalAutoLayoutConfigNode.settings = currentAlgorithmSettings;
+                    RED.nodes.dirty(true);
+                }
+            })
+        }
+    })
+})();
+</script>
+
+<script type="text/x-red" data-template-name="auto_layout_sidebar">
+    <div style="position: relative; height: 100%;">
+        <button type="button" style="font-size: larger;width:100%;background-color: yellowgreen;color:white;border: none;height: 32px;margin-top: 30px;margin-right: 10px;">Execute auto-layout</button>
+
+        <label for="node-config-input-algorithm"><i class="fa fa-terminal"></i> Algorithm</label>
+        <select id="node-config-input-algorithm">
+            <option value="dagre_lr">Dagre LR</option>
+            <option value="dagre_longest_path">Dagre Longest Path</option>
+            <option value="elkjs_mr_tree">ELKjs Mr. Tree</option>
+            <option value="elkjs_layered_upwards">ELKjs Layered Upwards</option>
+            <option value="elkjs_layered_downwards">ELKjs Layered Downwards</option>
+            <option value="elkjs_box">ELKjs Box</option>
+            <option value="pull_request_2267">Pull Request 2267</option></select>
+        </select>
+
+        <label for="node-config-input-algorithm-settings"><i class="fa fa-arrows-v"></i> Settings</label>
+        <input type="text" id="node-config-input-algorithm-settings" style="width: 100%; height: 100%">
+    </div>
+</script>
