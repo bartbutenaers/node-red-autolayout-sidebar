@@ -21,7 +21,7 @@
     },
     "node-red": {
         "nodes": {
-            "math": "auto_layout_config.js"
+            "auto_layout_config": "auto_layout_config.js"
         },
         "plugins": {
           "sidebar-plugin": "auto_layout_plugin.html"
