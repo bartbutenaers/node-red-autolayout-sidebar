@@ -23,44 +23,16 @@
         paletteLabel: 'AutoLayout',
         label: function () {
             return this.name;
-        },
-        oneditprepare: function () {
-            // Show the algorithm settings as json in a typedinput element (in the config node's screen)
-            $("#node-config-input-algorithm-settings").typedInput({
-                default: 'json',
-                types:['json']
-            });
-            // $("#node-config-input-algorithm").val(this.algorithm);
         }
     });
 })(jQuery);
 </script>
 
-<!-- The html for the config node -->
+<!-- The html for the config node does NOT include input fields, because the data only arrives from user input in the sidebar screen. -->
 <script type="text/x-red" data-template-name="auto_layout_config">
-    <div class="form-row" id="auto_layout_config_name_div">
-        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-config-input-name" class="xterm-setting" placeholder="Name">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-algorithm"><i class="fa fa-terminal"></i> Algorithm</label>
-        <select id="node-config-input-algorithm">
-            <option value="dagre_lr">Dagre LR</option>
-            <option value="dagre_longest_path">Dagre Longest Path</option>
-            <option value="elkjs_mr_tree">ELKjs Mr. Tree</option>
-            <option value="elkjs_layered_upwards">ELKjs Layered Upwards</option>
-            <option value="elkjs_layered_downwards">ELKjs Layered Downwards</option>
-            <option value="elkjs_box">ELKjs Box</option>
-            <option value="pull_request_2267">Pull Request 2267</option></select>
-        </select>
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-algorithm-settings"><i class="fa fa-arrows-v"></i> Settings</label>
-        <input type="text" id="node-config-input-algorithm-settings" style="width: 100%; height: 100%">
-    </div>
+    <div class="form-tips">This config node is read-only, because it stores the information entered in the 'Auto Layout' sidebar.</div>
 </script>
 
 <script type="text/x-red" data-help-name="auto_layout_config">
-    <p>Configuration for the auto-layout sidebar.</p>
-   
+    <p>Configuration for the 'Auto Layout' sidebar.</p>
 </script>
