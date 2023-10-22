@@ -85,7 +85,7 @@
         allnodes.forEach((n) => {
             // Only continue if the node has wires (e.g. a ui_group has no wires)
             if (n.wires) {
-                for (var widx = 0; widx < n.wires.length; widx++) {
+                for (var widx = 0; widx < (n.wires || []).length; widx++) {
                     for (var xidx = 0; xidx < n.wires[widx].length; xidx++) {
                         if ( allNodeIds.indexOf(n.wires[widx][xidx])> -1){
                             alledges.push({
@@ -100,19 +100,19 @@
         })
 
         allnodes = allnodes.map((n) => {
-            var nodeElement = document.getElementById(n.id);
-
-            // Don't map anything when the node has no getBBox function (e.g. for ui_group)
-            if(!nodeElement.getBBox) {
-                return null;
-            }
-
-            var bbox = nodeElement.getBBox();
+            let bbox = ( ( document.getElementById(n.id) && document.getElementById(n.id).getBBox && document.getElementById(n.id) ) || {
+              getBBox: () => {
+                return {
+                  width: 0,
+                  height: 0
+                }
+              }
+            });
 
             return {
                 id: n.id,
-                width: bbox.width + 3,
-                height: bbox.height + 3,
+                width: bbox.getBBox().width + 3,
+                height: bbox.getBBox().height + 3,
             }
         });
 
