@@ -12,15 +12,10 @@ The reason is that there are a number of uncertainties at this moment:
 + Is one of these algorithms capable to handle all the use cases?
 + And so on...
 
-Gerrit did great effors on Discourse (e.g. [this](https://discourse.nodered.org/t/noisecraft-anyone-heard-of-it/79813/32) discussion and yet [another](https://discourse.nodered.org/t/node-red-auto-layouting-using-elkjs-dagre/81052) one) to offer nodes and flows to get some feedback from the community.  However he got zero response unfortunately.  As a result, there are still a lot of questions that we can not all answer ourselves...
+For more details on why there isn't a one-size-fits-all solution, check out discussions [here](https://discourse.nodered.org/t/noisecraft-anyone-heard-of-it/79813/32) and [here](https://discourse.nodered.org/t/node-red-auto-layouting-using-elkjs-dagre/81052) on discourse.
 
 ## Issues
 If you have an issue or question about the algorithms (i.e. how the nodes are layouted), it might be better to start a new discussion on the Node-RED [forum](https://discourse.nodered.org/).  That way others in the community can think loud, and join the discussion.  Please mention Gerrit (@gregorius) and me (@bartbutenaers) in that discussion, to make sure we get a notification about it.
-
-## Support my Node-RED developments
-Please buy my wife a coffee to keep her happy, while I am busy developing Node-RED stuff for you ...
-
-<a href="https://www.buymeacoffee.com/bartbutenaers" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy my wife a coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## Node usage
 The following demo shows how to auto layout the selected nodes in a flow.
