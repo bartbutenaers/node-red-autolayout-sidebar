@@ -19,6 +19,9 @@
         "type": "git",
         "url": "https://github.com/bartbutenaers/node-red-autolayout-sidebar.git"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "node-red": {
         "nodes": {
             "auto_layout_config": "auto_layout_config.js"
