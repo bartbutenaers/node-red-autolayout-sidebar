@@ -1,6 +1,6 @@
 {
     "name": "@bartbutenaers/node-red-autolayout-sidebar",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "A sidebar plugin for Node-RED to offer auto-layouting",
     "dependencies": {
         "elkjs": "^0.8.2",
