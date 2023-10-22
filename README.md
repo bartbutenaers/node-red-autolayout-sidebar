@@ -20,13 +20,11 @@ If you have an issue or question about the algorithms (i.e. how the nodes are la
 ## Node usage
 The following demo shows how to auto layout the selected nodes in a flow.
 
-![auto_layout_demo](https://github.com/bartbutenaers/node-red-autolayout-sidebar/assets/14224149/c439f7e0-6329-49e0-8a31-1dfbdc6d8ba0)
+![auto_layout_demo](https://github.com/bartbutenaers/node-red-autolayout-sidebar/assets/14224149/10c5f04d-e0bb-4a55-ad24-571b2aba9646)
 
 The steps described in detail:
 
 1. Open the *"Auto Layout"* sidebar:
-
-   ![image](https://github.com/bartbutenaers/node-red-autolayout-sidebar/assets/14224149/c0a82158-20db-4e1a-896c-0be124b36ba6)
 
 2. Select a node in the flow (from where on the successive nodes need to be auto layouted).
 
