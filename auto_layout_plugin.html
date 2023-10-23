@@ -136,14 +136,14 @@
         var offsetY = 0;
         children.forEach((c) => {
             if (c.id == fixedNodeId) {
-                var nd = RED.nodes.node(c.id);
+                var nd = RED.nodes.node(c.id) || RED.nodes.junction(c.id);
                 offsetX = c.x - nd.x;
                 offsetY = c.y - nd.y;
             }
         });
 
         children.forEach((c) => {
-            var nd = RED.nodes.node(c.id);
+            var nd = RED.nodes.node(c.id) || RED.nodes.junction(c.id);
 
             changedNodes.push({
                 n: nd,
@@ -338,7 +338,13 @@
                         }
                 })   
                 
-                moveNodes(selection.fixedNodeId, nodes);
+                try {
+                    moveNodes(selection.fixedNodeId, nodes);
+                } catch ( ex ) {
+                    console.error( "Dagre exception moving nodes", ex)
+                    // ensure that dagre errors are also shown as notifications in Node-RED.
+                    RED.notify("Dagre autoroute error: " + ex);
+                }
                 break;
             case "elkjs_mr_tree": 
             case "elkjs_layered_upwards": 
@@ -359,6 +365,7 @@
                         moveNodes(selection.fixedNodeId, g.children);
                     })
                     .catch((ex) => {
+                        console.error( "ELKjs exception moving nodes", ex)
                         RED.notify("ElkJs autoroute error: " + ex);
                     });
                 break;
@@ -550,6 +557,8 @@
     // But it is a non-official unpublished event, so it might be changed or removed in the future...
     RED.events.on('runtime-state', function() {
         // Register an action so the user could bind a keyboard shortcut to show the auto-layout sidebar
+        // but avoid an "Error: Cannot override existing action" error in the browser console:
+        RED.actions.remove("core:auto-layout-flow");
         RED.actions.add("core:auto-layout-flow",function() {
             executeAutoLayout();
         });
