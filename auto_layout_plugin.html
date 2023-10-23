@@ -136,14 +136,14 @@
         var offsetY = 0;
         children.forEach((c) => {
             if (c.id == fixedNodeId) {
-                var nd = RED.nodes.node(c.id);
+                var nd = RED.nodes.node(c.id) || RED.nodes.junction(c.id);
                 offsetX = c.x - nd.x;
                 offsetY = c.y - nd.y;
             }
         });
 
         children.forEach((c) => {
-            var nd = RED.nodes.node(c.id);
+            var nd = RED.nodes.node(c.id) || RED.nodes.junction(c.id);
 
             changedNodes.push({
                 n: nd,
