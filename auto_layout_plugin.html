@@ -557,6 +557,8 @@
     // But it is a non-official unpublished event, so it might be changed or removed in the future...
     RED.events.on('runtime-state', function() {
         // Register an action so the user could bind a keyboard shortcut to show the auto-layout sidebar
+        // but avoid an "Error: Cannot override existing action" error in the browser console:
+        RED.actions.remove("core:auto-layout-flow");
         RED.actions.add("core:auto-layout-flow",function() {
             executeAutoLayout();
         });
