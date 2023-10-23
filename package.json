@@ -14,7 +14,7 @@
     "bugs": {
         "url": "https://github.com/bartbutenaers/node-red-autolayout-sidebar/issues"
     },
-    "homepage": "https://github.com/bartbutenaers/node-red-autolayout-sidebar",
+    "homepage": "https://github.com/bartbutenaers/node-red-autolayout-sidebar#readme",
     "repository": {
         "type": "git",
         "url": "https://github.com/bartbutenaers/node-red-autolayout-sidebar.git"
@@ -22,7 +22,11 @@
     "publishConfig": {
         "access": "public"
     },
+    "engines": {
+        "node": ">=8"
+    },
     "node-red": {
+        "version": ">=2.0.0",
         "nodes": {
             "auto_layout_config": "auto_layout_config.js"
         },
