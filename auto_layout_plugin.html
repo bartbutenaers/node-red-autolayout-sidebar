@@ -338,7 +338,13 @@
                         }
                 })   
                 
-                moveNodes(selection.fixedNodeId, nodes);
+                try {
+                    moveNodes(selection.fixedNodeId, nodes);
+                } catch ( ex ) {
+                    console.error( "Dagre exception moving nodes", ex)
+                    // ensure that dagre errors are also shown as notifications in Node-RED.
+                    RED.notify("Dagre autoroute error: " + ex);
+                }
                 break;
             case "elkjs_mr_tree": 
             case "elkjs_layered_upwards": 
@@ -359,6 +365,7 @@
                         moveNodes(selection.fixedNodeId, g.children);
                     })
                     .catch((ex) => {
+                        console.error( "ELKjs exception moving nodes", ex)
                         RED.notify("ElkJs autoroute error: " + ex);
                     });
                 break;
