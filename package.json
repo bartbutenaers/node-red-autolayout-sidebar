@@ -9,6 +9,12 @@
     "author": {
         "name": "Bart Butenaers"
     },
+    "contributors": [
+        {
+            "name": "Gerrit Riessen",
+            "url": "https://github.com/gorenje"
+        }
+    ],
     "license": "Apache-2.0",
     "keywords": ["node-red", "auto", "layout", "graph", "sidebar"],
     "bugs": {
