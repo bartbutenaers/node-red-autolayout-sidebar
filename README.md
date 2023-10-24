@@ -4,6 +4,12 @@ A sidebar plugin for Node-RED to offer auto-layouting, i.e. rearrange the select
 All credits for the layout logic go to [Gerrit Riessen](https://github.com/gorenje)!  This sidebar plugin is based on his [node-red-contrib-auto-alignment](https://github.com/gorenje/node-red-contrib-auto-alignment) node, and some code snippets are copied shameless :-)
 Since I am more a fan of sidebars (instead of plugins) for this kind of flow editor features, I developed this sidebar as an addition to Gerrit's node-red-contrib-auto-alignment node.
 
+## Install
+Run the following npm command in your Node-RED user directory (typically ~/.node-red):
+```
+npm install @bartbutenaers/node-red-autolayout-sidebar
+```
+
 ## Experimental
 This sidebar plugin is experimental, which means some breaking changes might be introduced in the near future!
 
