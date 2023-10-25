@@ -9,6 +9,7 @@ Run the following npm command in your Node-RED user directory (typically ~/.node
 ```
 npm install @bartbutenaers/node-red-autolayout-sidebar
 ```
+Caution: NodeJs version ***17.0.0*** is minimal required by the DagreJs graph library!
 
 ## Experimental
 This sidebar plugin is experimental, which means some breaking changes might be introduced in the near future!
