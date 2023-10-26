@@ -555,14 +555,16 @@
     // (see https://discourse.nodered.org/t/add-sidebar-tab-on-app-start-not-working/64726/4).
     // I found that the 'runtime-state' event is triggered just after the config nodes are loaded, so it works fine. 
     // But it is a non-official unpublished event, so it might be changed or removed in the future...
-    RED.events.on('runtime-state', function() {
+    var dothisOneTimePlease = () => {
+        RED.events.off('runtime-state', dothisOneTimePlease )
+
         // Register an action so the user could bind a keyboard shortcut to show the auto-layout sidebar
         // but avoid an "Error: Cannot override existing action" error in the browser console:
-        RED.actions.remove("core:auto-layout-flow");
-        RED.actions.add("core:auto-layout-flow",function() {
-            executeAutoLayout();
-        });
-
+        if( RED.actions.list().filter( (d) => { return d.id == "core:auto-layout-flow"} ).length == 0 ) {
+            RED.actions.add("core:auto-layout-flow", executeAutoLayout);
+        }
+        
+        console.log( "runtime state triggered")
         // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
         var content = $($('script[type="text/x-red"][data-template-name="auto_layout_sidebar"]').i18n().html());
        
@@ -618,10 +620,21 @@
         })
         $("#node-input-algorithm").change();
 
-        $("#auto-layout-button").click(function() {
-            executeAutoLayout();
+        $("#auto-layout-button").click( executeAutoLayout );
+
+        $("#auto-layout-revert-button").click(function() {
+            // revert the last change by calling undo but also maintain the 
+            // original selection, making it easier to try out different 
+            // algorithms.
+            var sle = RED.view.selection();
+
+            // this will clear the selection, hence make a copy beforehand
+            RED.actions.invoke("core:undo");
+
+            RED.view.select(sle);
         })
-    });
+    };
+    RED.events.on('runtime-state', dothisOneTimePlease )
 })();
 </script>
 
@@ -642,5 +655,7 @@
         <input type="text" id="node-input-settings" style="width: 100%; margin-top: 30px">
         
         <button type="button" id="auto-layout-button" style="font-size: larger;width:100%;background-color: yellowgreen;color:white;border: none;height: 32px;margin-top: 30px;">Execute auto-layout</button>
+
+        <button type="button" id="auto-layout-revert-button" style="font-size: smaller;width:50%;background-color: rgb(173, 22, 37); color: rgb(246, 246, 246); border: 1px solid rgb(173, 22, 37); height: 32px; margin-top: 30px;">Revert Layout</button>
     </div>
 </script>
