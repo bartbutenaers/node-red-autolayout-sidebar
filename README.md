@@ -94,3 +94,9 @@ Settings for the ELKjs library (see a full list of all properties in their [docu
 + ***childAreaHeight***: the height of the area available for placing child nodes.
 + ***childAreaWidth***: the width of the area available for placing child nodes.
 
+## Sharing Settings
+
+If you have a layout configuration that you wish to include in the presets, then please share your configuration in the [Node-RED forum](https://discourse.nodered.org/t/announcement-node-red-autolayout-sidebar-experimental-version-s/82263).
+
+Any suggestions and ideas are most welcome :+1:
+
