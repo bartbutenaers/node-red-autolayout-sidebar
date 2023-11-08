@@ -41,6 +41,14 @@ The steps described in detail:
 
 5. Press the green *"Execute auto layout"* button in the sidebar.
 
+## Node Undo
+
+Because the undo does not work in the sidebar, an undo button has been added:
+
+![img](https://cdn.openmindmap.org/content/1699442004757_auto-layout-undo.gif)
+
+The Undo button works just as normal undo and multiple click will cause other things to be undone aswell: the undo button is **not** specific to the layout, it **will** undo other actions.
+
 ## Node properties
 
 ### Algorithm
@@ -85,4 +93,10 @@ Settings for the ELKjs library (see a full list of all properties in their [docu
 + ***layerConstraint***: "FIRST" constrains a node to be placed in the first layer.
 + ***childAreaHeight***: the height of the area available for placing child nodes.
 + ***childAreaWidth***: the width of the area available for placing child nodes.
+
+## Sharing Settings
+
+If you have a layout configuration that you wish to include in the presets, then please share your configuration in the [Node-RED forum](https://discourse.nodered.org/t/announcement-node-red-autolayout-sidebar-experimental-version-s/82263).
+
+Any suggestions and ideas are most welcome :+1:
 
