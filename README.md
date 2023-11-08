@@ -41,6 +41,14 @@ The steps described in detail:
 
 5. Press the green *"Execute auto layout"* button in the sidebar.
 
+## Node Undo
+
+Because the undo does not work in the sidebar, an undo button has been added:
+
+![img](https://cdn.openmindmap.org/content/1699442004757_auto-layout-undo.gif)
+
+The Undo button works just as normal undo and multiple click will cause other things to be undone aswell: the undo button is **not** specific to the layout, it **will** undo other actions.
+
 ## Node properties
 
 ### Algorithm
