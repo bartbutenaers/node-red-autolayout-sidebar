@@ -75,8 +75,9 @@
 
         // Convert nodes to flows.json format since all the wires, i.e. links, are 
         // contained in one simple json format.
+        let fixedNode = RED.nodes.node(fixedNodeId)
         var allnodes = RED.nodes.createExportableNodeSet(ns).filter((n) => {
-            return n.type != "tab" && n.type != 'subflow' && n.type != "group"
+            return n.type != "tab" && n.type != 'subflow' && n.type != "group" && n.z == fixedNode.z
         });
 
         var alledges = [];
