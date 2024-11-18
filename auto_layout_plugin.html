@@ -242,7 +242,6 @@
         // If not found previously, let's go find it
         if (globalAutoLayoutConfigNode === null) {
             var configNodes = [];
-            console.log("=======================> HIER configNodes via eachConfig nodig")
             RED.nodes.eachConfig(function(configNode) {
                 if (configNode.type === 'auto_layout_config') { 
                     configNodes.push(configNode); 
